@@ -12,7 +12,11 @@
     <div class="container">
         <h1>Notes App!</h1>
         <ul>
-            {% for id, notes_list in }
+            {% for id, notes_list in notes.items %}
+            <li>
+                <div><a href="/notes/{{ id }}">{{ notes_list.title }}</a></div>
+            </li>
+            {% endfor %}
         </ul>
 
     </div>
