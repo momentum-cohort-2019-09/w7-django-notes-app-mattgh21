@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from notes.models import Note
+from notes.models import Note, NoteForm
+from django.views.generic.edit import FormView
+
 
 # Create your views here.
 def notes_list(request):
@@ -13,3 +15,10 @@ def notes_detail(request, pk):
     return render(request, 'notes/notes_detail.html', {
         'note': note,
     })
+
+def add_note(request):
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'notes/add_note.html')
+    

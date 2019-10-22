@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.notes_list, name='notes_list'),
     path('notes/<int:pk>/', views.notes_detail, name='notes_detail'),
+    path('notes/add_note/', views.add_note, name="add_note"),
 ]
