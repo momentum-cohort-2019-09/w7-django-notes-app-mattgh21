@@ -1,8 +1,8 @@
  {% extends "notes/base.html" %} {% block content %}
 <ul>
-    {% for id, notes_list in notes.items %}
+    {% for note in notes %}
     <li>
-        <div><a href="/notes/{{ id }}">{{ notes_list.title }}</a></div>
+        <div><a href="/notes/{{ note.id }}">{{ note.title }}</a></div>
     </li>
     {% endfor %}
 </ul>
