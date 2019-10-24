@@ -33,8 +33,8 @@ def add_note(request):
         'form': form
     })
     
-def edit_note(request):
-    note = get_object_or_404(Note, ide=pk)
+def edit_note(request, pk):
+    note = get_object_or_404(Note, id=pk)
     if request.method == "POST":
         form = NoteForm(request.POST, instance=note)
         if form.is_valid():
@@ -47,3 +47,7 @@ def edit_note(request):
     return render(request, 'notes/edit_note.html',{
         'form': form
     })
+
+def delete_note(request, pk):
+    Note.objects.get(id=pk).delete()
+    return redirect('/')
