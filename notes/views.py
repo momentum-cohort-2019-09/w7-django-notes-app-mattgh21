@@ -60,7 +60,7 @@ def search_notes(request):
             notes = Note.objects.all()
             data = request.POST.copy()
             for note in notes:
-                if data.get('search_text') in note.title:
+                if data.get('search_text').casefold() in note.title.casefold():
                     selected_notes.append(note)
             return render(request, 'notes/searched_notes.html',{
                 'notes': selected_notes})
