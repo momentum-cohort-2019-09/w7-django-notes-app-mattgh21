@@ -1,0 +1,7 @@
+{% extends 'notes/base.html' %} {% block content %} {% for note in notes %}
+<li>
+    <div><a href="/notes/{{ note.id }}">{{note.title}}</a></div>
+</li>
+{% endfor %}
+<p><a href="/">Go Home</a></p>
+{% endblock %}

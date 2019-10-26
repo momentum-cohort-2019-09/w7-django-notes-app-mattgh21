@@ -3,7 +3,7 @@ from notes.models import Note
 from django.views.generic.edit import FormView
 from django.utils import timezone
 from django.http import HttpResponse
-from .forms import NoteForm
+from .forms import NoteForm, SearchForm
 
 
 # Create your views here.
@@ -51,3 +51,22 @@ def edit_note(request, pk):
 def delete_note(request, pk):
     Note.objects.get(id=pk).delete()
     return redirect('/')
+
+def search_notes(request):
+    selected_notes = []
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            notes = Note.objects.all()
+            data = request.POST.copy()
+            for note in notes:
+                if data.get('search_text') in note.title:
+                    selected_notes.append(note)
+            return render(request, 'notes/searched_notes.html',{
+                'notes': selected_notes})
+        
+    else:
+        form = SearchForm()
+        return render(request, 'notes/search_notes.html',{
+            'form': form})
+    
