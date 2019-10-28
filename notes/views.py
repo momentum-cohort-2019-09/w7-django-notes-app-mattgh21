@@ -3,7 +3,7 @@ from notes.models import Note
 from django.views.generic.edit import FormView
 from django.utils import timezone
 from django.http import HttpResponse
-from .forms import NoteForm, SearchForm
+from .forms import NoteForm, SearchForm, SortForm
 
 
 # Create your views here.
@@ -69,4 +69,31 @@ def search_notes(request):
         form = SearchForm()
         return render(request, 'notes/search_notes.html',{
             'form': form})
-    
+
+def sort_notes(request):
+    if request.method == 'POST':
+        form = SortForm(request.POST)
+        if form.is_valid():
+            data = request.POST.copy()
+            if data.get('by_title'):
+                if data.get('asc_or_desc') == 'Descending':
+                    sorted_notes = Note.objects.order_by('-updated_at', 'title')
+                elif data.get('asc_or_desc') == 'Ascending':
+                    sorted_notes = Note.objects.order_by('-updated_at', 'title')
+                elif data.get('asc_or_desc') == 'Neither':
+                    sorted_notes = Note.objects.order_by('title')
+            else:
+                if data.get('asc_or_desc') == 'Descending':
+                    sorted_notes = Note.objects.order_by('-updated_at')
+                elif data.get('asc_or_desc') == 'Ascending':
+                    sorted_notes = Note.objects.order_by('-updated_at')
+        return render(request, 'notes/sorted_notes.html',{
+            'notes': sorted_notes
+        })
+
+    else:
+        form = SortForm()
+    return render(request, 'notes/sort_notes.html',{
+        'form': form
+    })
+                    
